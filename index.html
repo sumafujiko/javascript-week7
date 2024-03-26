@@ -1,0 +1,92 @@
+<!--Complete the following:-->
+<!--Create a webpage that uses a form and asks the user for their name and email. 
+
+A basic form is provided below:
+
+<form>
+
+Name:<input type="text" /><br/>
+
+Email:<input type="email" /><br/>
+
+<input type="submit" /><br/>
+
+</form>
+
+When the user submits the form, the form should be hidden, and a message should appear in the following format:
+[insert user name], thank you for your details. We will be in touch via [insert user email] shortly.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript</title>
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); 
+            let name = document.getElementById('name').value;
+            if (name == "") {
+                alert("Please enter your name.");
+                return;
+            } else if (name.length < 3) {
+                alert("Name must be at least 3 characters long.");
+                return;
+            } else if (name.length > 15) {
+                alert("Name must be less than 15 characters long.");
+                return;
+            } else if (!isNaN(name)) {
+                alert("Name cannot be a number.");
+                return;
+            }
+
+            let email = document.getElementById('email').value;
+            if (email == "") {
+                alert("Please enter your email.");
+                return;
+            } else if (email.indexOf('@') == -1 || email.indexOf('.') == -1) {
+                alert("Please enter a valid email.");
+                return;
+            } else if (email.indexOf('@') > email.lastIndexOf('.')) {
+                alert("Please enter a valid email.");
+                return;
+            }
+            
+            // Hide the form
+            document.getElementById('form').style.display = 'none';
+
+            // Show the message
+            let message = document.createElement('p');
+            message.textContent = name + ", thank you for your details. We will be in touch via " + email + " shortly.";
+            document.body.appendChild(message);
+        }
+    </script>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 100px;
+        }
+        input {
+            margin: 10px;
+            padding: 5px;
+        }
+        button {
+            padding: 5px;
+        }
+
+        #reset {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form id="form" onsubmit="submitForm(event)">
+        <input type="text" id="name" placeholder="Name"><br>
+        <input type="email" id="email" placeholder="Email"><br>
+        <button type="submit">Submit</button><br>
+    </form>
+
+    <button id="reset" onclick="location.reload()">Reset</button>
+</body>
+</html>
